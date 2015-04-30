@@ -2,7 +2,7 @@
 package main
 
 import (
-	"Aws/handlers"
+	"github.com/oldtree/Aws/handlers"
 	"github.com/gin-gonic/gin"
 	"runtime"
 )
