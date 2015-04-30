@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"Aws/Service"
+	"github.com/oldtree/Aws/Service"
 	"github.com/gin-gonic/gin"
 )
 
