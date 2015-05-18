@@ -19,6 +19,10 @@ func main() {
 		blog.GET("/history", handlers.HandleHistory)
 		blog.GET("/watcher", handlers.HandleWatcher)
 	}
+	browse := r.Group("/browse")
+	{
+		browse.GET("", handlers.HandleBrowse)
+	}
 
 	r.Run(":8888")
 }
