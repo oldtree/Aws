@@ -1,10 +1,11 @@
 package Bayes
 
 import (
-	"fmt"
-	"io"
+//	"fmt"
+//	"io"
 )
 
+//an element list  inplements base on map[interface{}]interface{}
 type KeyValueList map[interface{}]interface{}
 
 func (l KeyValueList) Get(key interface{}) interface{} {
