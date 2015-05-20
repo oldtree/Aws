@@ -1,8 +1,8 @@
 package Bayes
 
 import (
-	"fmt"
-	"io"
+//"fmt"
+//	"io"
 )
 
 type CacheTable struct {
@@ -18,8 +18,16 @@ type CacheTable struct {
 func (c *CacheTable) Read() {
 
 }
-func (c *CacheTable) Write() bool  {}
-func (c *CacheTable) Updata() bool {}
+func (c *CacheTable) Write() bool {
+	return false
+
+}
+func (c *CacheTable) Updata() bool {
+
+	return false
+
+}
 func (c *CacheTable) Explode() bool {
 	fmt.Println("not implement yet")
+	return false
 }

@@ -15,7 +15,7 @@ func (l KeyValueList) Set(key interface{}, value interface{}) {
 }
 
 func (l KeyValueList) Delete(key interface{}) bool {
-	delete(l[key])
+	delete(l, key)
 	return true
 }
 func (l KeyValueList) Len() int {

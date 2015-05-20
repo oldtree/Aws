@@ -8,7 +8,7 @@ import (
 type Elelist interface {
 	Delete(interface{}) bool
 	Len() int
-	Get(key interface())interface{}
+	Get(key interface{}) interface{}
 	Set(value interface{})
 }
 type Table interface {
