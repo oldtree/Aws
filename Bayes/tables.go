@@ -34,8 +34,29 @@ func NewCacheTable() *CacheTable {
 	c.Hit = 0
 	c.Lose = 0
 	c.TaskQueue = make(chan *TableOperationCell, 512)
-	c.ReadWrite = *NewIOAdaper("")
+	c.ReadWrite = *NewIOAdaper()
+	var kv KeyValueList
+	kv = make(map[interface{}]interface{}, 1024)
+	c.Elements = kv
 	return c
+}
+
+func (c *CacheTable) Get(key interface{}) interface{} {
+	return c.Elements.Get(key)
+}
+func (c *CacheTable) Set(key interface{}, value interface{}) {
+	c.Elements.Set(key, value)
+}
+
+func (c *CacheTable) Updata(key interface{}, value interface{}) {
+	c.Elements.Updata(key, value)
+}
+func (c *CacheTable) Delete(key interface{}) bool {
+	return c.Elements.Delete(key)
+}
+
+func (c *CacheTable) Len() int {
+	return c.Elements.Len()
 }
 
 type TableOperationCell struct {
@@ -61,7 +82,7 @@ func (c *CacheTable) TaskLoop() {
 			case WRITE_OPCODE:
 				c.Write(cell.Key)
 			case UPDATA_OPCODE:
-				go c.Updata(cell.Key)
+				//				go c.Updata(cell.Key)
 			}
 		}
 	}
@@ -74,12 +95,6 @@ func (c *CacheTable) Read(key interface{}) {
 
 // for read /write /updata operation with DB
 func (c *CacheTable) Write(key interface{}) bool {
-	return false
-}
-
-// for read /write /updata operation with DB
-func (c *CacheTable) Updata(key interface{}) bool {
-
 	return false
 }
 

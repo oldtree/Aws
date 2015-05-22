@@ -15,6 +15,9 @@ func (l KeyValueList) Set(key interface{}, value interface{}) {
 	l[key] = value
 }
 
+func (l KeyValueList) Updata(key interface{}, value interface{}) {
+	l[key] = value
+}
 func (l KeyValueList) Delete(key interface{}) bool {
 	delete(l, key)
 	return true

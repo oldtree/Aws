@@ -11,9 +11,8 @@ type IOAdaper struct {
 	Address string
 }
 
-func NewIOAdaper(Address string) *IOAdaper {
+func NewIOAdaper() *IOAdaper {
 	rw := new(IOAdaper)
-	rw.Address = Address
 	return rw
 }
 
