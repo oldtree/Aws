@@ -15,8 +15,8 @@ type Elelist interface {
 
 //cache data table interface
 type Table interface {
-	Read()
-	Write() bool
-	Updata() bool
+	Read(key interface{})
+	Write(key interface{}) bool
+	Updata(key interface{}) bool
 	Explode() bool
 }

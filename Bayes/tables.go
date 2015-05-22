@@ -2,36 +2,85 @@ package Bayes
 
 import (
 	"fmt"
-	//	"io"
+	"io"
+)
+
+const (
+	READ_OPCODE = iota
+	WRITE_OPCODE
+	UPDATA_OPCODE
 )
 
 type CacheTable struct {
 	//key range
 	StartKey interface{}
 	EndKey   interface{}
-	Hit      int
-	Lose     int
-	Remote   bool
-	Address  string
+	//for location hit rate
+	Hit  int
+	Lose int
+	//for if the cache machine is not local if this machine is main machine
+	Remote bool
+
+	//a writer reader implements io.ReadWriter interface
+	ReadWrite io.ReadWriter
+	//real list for store k-v,is a interface
 	Elements Elelist
+	//task queue ,not  a best deal
+	TaskQueue chan *TableOperationCell
+}
+
+func NewCacheTable() *CacheTable {
+	c := new(CacheTable)
+	c.Hit = 0
+	c.Lose = 0
+	c.TaskQueue = make(chan *TableOperationCell, 512)
+	c.ReadWrite = *NewIOAdaper("")
+	return c
+}
+
+type TableOperationCell struct {
+	Key  interface{}
+	Code int
+}
+
+func (c *CacheTable) GenerateCell(key interface{}, code int) {
+	cell := &TableOperationCell{
+		Key:  key,
+		Code: code,
+	}
+	c.TaskQueue <- cell
+}
+
+func (c *CacheTable) TaskLoop() {
+	for {
+		select {
+		case cell := <-c.TaskQueue:
+			switch cell.Code {
+			case READ_OPCODE:
+				go c.Read(cell.Key)
+			case WRITE_OPCODE:
+				c.Write(cell.Key)
+			case UPDATA_OPCODE:
+				go c.Updata(cell.Key)
+			}
+		}
+	}
 }
 
 // for read /write /updata operation with DB
-func (c *CacheTable) Read() {
+func (c *CacheTable) Read(key interface{}) {
 
 }
 
 // for read /write /updata operation with DB
-func (c *CacheTable) Write() bool {
+func (c *CacheTable) Write(key interface{}) bool {
 	return false
-
 }
 
 // for read /write /updata operation with DB
-func (c *CacheTable) Updata() bool {
+func (c *CacheTable) Updata(key interface{}) bool {
 
 	return false
-
 }
 
 //for product some new Virtual CachePoint
