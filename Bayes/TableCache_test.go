@@ -57,3 +57,36 @@ func Test_TableDelete(t *testing.T) {
 		t.Error("Delete element error")
 	}
 }
+
+func Benchmark_TableSet(t *testing.B) {
+	for i := 0; i < t.N; i++ {
+		ta.(Elelist).Set(i, i)
+	}
+}
+
+func Benchmark_TableGet(t *testing.B) {
+	for i := 0; i < t.N; i++ {
+		result := ta.(Elelist).Get(i)
+		if result != nil {
+			if result.(int) != i {
+				t.Error("get element error")
+			}
+		}
+	}
+}
+
+func Benchmark_TableUpdata(t *testing.B) {
+	for i := 0; i < t.N; i++ {
+		ta.(Elelist).Updata(i, i*i)
+	}
+}
+func Benchmark_TableDelete(t *testing.B) {
+
+	for i := 0; i < t.N; i++ {
+		ta.(Elelist).Delete(i)
+		result := ta.(Elelist).Get(i)
+		if result != nil {
+			t.Error("Delete element error")
+		}
+	}
+}
